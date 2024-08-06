@@ -1,74 +1,89 @@
-var buttonColours = ["red", "blue", "green", "yellow"];
-var gamePattern = [];
-var userClickedPattern = [];
-var started = false;
-var level = 0;
+var colorButton = ["green", "yellow", "red", "blue"];
+var patronJuego = [];
+var patronClick = [];
+var nivel = 0;
+var inicio = false;
 
-$(".button-iniciar").click(function() {
- if (!started) {
-  $("#level-title").text("Nivel " + 1);
-  setTimeout(function() {
-    nextSequence();
-  }, 1000);
-  started = true;
- }
+document.querySelector("button").addEventListener("click", function () {
+  if (!inicio) {
+    setTimeout(function () {
+      proximaSecuencia();
+      document.querySelector(".button-iniciar").innerHTML = "REINICIAR";
+    }, 1000);
+  } else if (inicio) {
+    reiniciar();
+    setTimeout(function () {
+      proximaSecuencia();
+    }, 1000);
+  }
+  inicio = true;
 });
 
-$(".btn").click(function() {
-    var buttonPressed = $(this).attr("id");
-    userClickedPattern.push(buttonPressed);
-    playSounds(buttonPressed);
-    animacion(buttonPressed);
-    chekearPatron(userClickedPattern.length-1);
-})
+for (var i = 0; i < 4; i++) {
+  document
+    .querySelectorAll(".btn")
+    [i].addEventListener("click", function (event) {
+      var buttonPresionado = this.getAttribute("id");
+      if (inicio) {
+        patronClick.push(buttonPresionado);
+        playSonido(buttonPresionado);
+        animation(buttonPresionado);
+        verificarPatron(patronClick.length - 1);
+      }
+    });
+}
 
-function chekearPatron(buttonActual) {
-    if(userClickedPattern[buttonActual] === gamePattern[buttonActual]) {
-       console.log("sucesos");
-       if(userClickedPattern.length === gamePattern.length) {
-         setTimeout(function() {
-            nextSequence();
-         }, 500);
-       }
-    } else {
-        playSounds("wrong");
-        $("body").addClass("game-over");
-        $("#level-title").text("Game over, Presione El Boton Para Reiniciar.");
-        setTimeout(function() {
-            $("body").removeClass("game-over");
-        }, 500);
-        restablecer();
+function verificarPatron(buttonActual) {
+  if (patronJuego[buttonActual] === patronClick[buttonActual]) {
+    console.log("suceso");
+    if (patronJuego.length === patronClick.length) {
+      setTimeout(function () {
+        proximaSecuencia();
+      }, 500);
     }
+  } else {
+    document.querySelector("body").classList.add("game-over");
+    document.querySelector("#level-title").innerHTML =
+      "Game over, Presione El Boton Para Reiniciar";
+    playSonido("wront");
+    inicio = false;
+    setTimeout(function () {
+      document.querySelector("body").classList.remove("game-over");
+    }, 500);
+    document.querySelector(".button-iniciar").innerHTML = "REINICIAR";
+    reiniciar();
+  }
 }
 
-function nextSequence(valor) {
-    userClickedPattern = [];
-    level++;
-    $("#level-title").text("Nivel " + level);
-    var numberRandom = Math.floor(Math.random() * 4);
-    var userChanseColor = buttonColours[numberRandom];
-    gamePattern.push(userChanseColor);
-    $("#" + userChanseColor).fadeIn(100).fadeOut(100).fadeIn(100);
-    playSounds(userChanseColor);
+function proximaSecuencia(buttonActual) {
+  patronClick = [];
+  nivel++;
+  document.querySelector("#level-title").innerHTML = "Nivel " + nivel;
+  var numRandom = Math.floor(Math.random() * 4);
+  var usarCambioColor = colorButton[numRandom];
+  patronJuego.push(usarCambioColor);
+  document.querySelector("#" + usarCambioColor).classList.add("efecto");
+  setTimeout(function () {
+    document.querySelector("#" + usarCambioColor).classList.remove("efecto");
+  }, 200);
+  playSonido(usarCambioColor);
 }
 
-function playSounds(valor) {
-    var audio = new Audio("sounds/" + valor + ".mp3")
-    audio.play();
+function playSonido(buttonActual) {
+  var audio = new Audio("sounds/" + buttonActual + ".mp3");
+  audio.play();
 }
 
-function animacion(colorSelect) {
-    $("#" + colorSelect).addClass("pressed");
-    setTimeout(function() {
-        $("#" + colorSelect).removeClass("pressed");
-    }, 200);
+function animation(buttonActual) {
+  document.querySelector("#" + buttonActual).classList.add("pressed");
+  setTimeout(function () {
+    document.querySelector("#" + buttonActual).classList.remove("pressed");
+  }, 200);
 }
 
-function restablecer() {
-    gamePattern = [];
-    level = 0;
-    started = false;
+function reiniciar() {
+  patronJuego = [];
+  patronClick = [];
+  inicio = false;
+  nivel = 0;
 }
-
-
-
