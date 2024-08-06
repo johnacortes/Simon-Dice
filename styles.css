@@ -1,0 +1,105 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  background-color: #011F3F;
+}
+
+.container-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  height: 30vh;
+}
+
+#level-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
+  color: #FEF2BF;
+}
+
+.button-iniciar {
+  border-radius: 20%;
+  width: 100px;
+  border: 3PX solid black;
+  background-color: black;
+  color: aliceblue;
+  font-size: 1rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 70vh;
+  gap: 30px;
+}
+
+.container-row {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.btn {
+  height: 50vh;
+  width: 100%;
+  border: 10px solid black;
+  border-radius: 20%;
+}
+
+.game-over {
+  background-color: red;
+  opacity: 0.8;
+}
+
+.red {
+  background-image: url(imagenes/frezzer.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.green {
+  background-image: url(imagenes/goku.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.blue {
+  background-image: url(imagenes/piccolo.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.yellow {
+  background-image: url(imagenes/vegueta.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.pressed {
+  box-shadow: 0 0 20px white;
+  background-color: grey;
+}
+
+.efecto {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+@media (max-width: 600px) {
+  #level-title {
+    font-size: 1rem;
+  }
+}
